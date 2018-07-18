@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Logged in</title>
+</head>
+    <body>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <h1>Users</h1>
+        <p></p>
+        <p>currently logged in: {{request.session.user_id}}</p>
+        {{logged_user.first_name}}
+        <h1>DON'T STEAL THIS INFORMATION PLEASE ;)</h1>
+        <table>
+            <thead>
+                <th>User ID</th>
+                <th>first name</th>
+                <th>last name</th>
+                <th>email</th>
+                <th>password</th>
+                <th>created_at</th>
+                <th>updated_at</th>
+                <th>OPS</th>
+                <tbody>
+                {% for user in all_users %}
+                <tr>
+                    <td>{{user.id}}</td>
+                    <td>{{user.first_name}}</td>
+                    <td>{{user.last_name}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.password}}</td>
+                    <td>{{user.created_at}}</td>
+                    <td>{{user.updated_at}}</td>
+                    <td><a href="/login_registration_app/{{user.id}}/delete/">DELETE</a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </thead>
+        </table>
+        <form action='/login_registration_app/logout' method='POST' id = "logout">
+            {% csrf_token %}
+            <input type="submit" value="Log Out">
+        </form>
+    </body>
+</html>
